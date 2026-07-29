@@ -204,44 +204,41 @@ async function descargarPDF(){
     pdf.addImage(
         logoBase64,
         "PNG",
-        20,
+        25,
         8,
-        70,
-        15
-    );
+        160,
+        35
+);
 
     // ENCABEZADO
     pdf.setFontSize(16);
     pdf.setFont("helvetica", "bold");
-    pdf.text("DESPRENDIBLE DE NOMINA", 105, 35, { align: "center" });
-
-    pdf.setFontSize(16);
-    pdf.text("DESPRENDIBLE DE NOMINA", 105, 30, { align: "center" });
+    pdf.text("DESPRENDIBLE DE NOMINA", 105, 60, { align: "center" });
 
     // FECHA
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
-    pdf.text("Fecha de pago: 31/08/2026", 20, 60);
+    pdf.text("Fecha de pago: 31/08/2026", 20, 70);
 
     // DATOS EMPLEADO
     pdf.setFont("helvetica", "bold");
-    pdf.text("Empleado:", 20, 75);
-
+    pdf.text("Empleado:", 20, 85);
+    
     pdf.setFont("helvetica", "normal");
-    pdf.text(empleadoActual.NOMBRE, 50, 75);
-
+    pdf.text(empleadoActual.NOMBRE, 55, 85);
+    
     pdf.setFont("helvetica", "bold");
-    pdf.text("Cedula:", 20, 85);
-
+    pdf.text("Cedula:", 20, 95);
+    
     pdf.setFont("helvetica", "normal");
-    pdf.text(String(empleadoActual.CEDULA), 50, 85);
-
+    pdf.text(String(empleadoActual.CEDULA), 55, 95);
+    
     // LINEA
-    pdf.line(20, 90, 190, 90);
+    pdf.line(20, 105, 190, 105);
 
     // TITULO SECCION
     pdf.setFont("helvetica", "bold");
-    pdf.text("INFORMACION BANCO", 20, 95);
+    pdf.text("INFORMACION BANCO", 20, 120);
 
     pdf.setFont("helvetica", "normal");
 
@@ -249,8 +246,8 @@ async function descargarPDF(){
         "Salario: $" +
         formatoMoneda(empleadoActual.SALARIO),
         20,
-        110
-    );
+        135
+);
 
     pdf.text(
         "Auxilio Transporte: $" +
@@ -258,8 +255,8 @@ async function descargarPDF(){
             empleadoActual["AUX. TRANSPORTE"]
         ),
         20,
-        120
-    );
+        145
+);
 
     pdf.text(
         "Rodamiento: $" +
@@ -267,8 +264,8 @@ async function descargarPDF(){
             empleadoActual.RODAMIENTO
         ),
         20,
-        130
-    );
+        155
+);
 
     pdf.text(
         "Salud y Pension: $" +
@@ -276,26 +273,25 @@ async function descargarPDF(){
             empleadoActual["SALUD Y PENSION"]
         ),
         20,
-        140
-    );
+        165
+);
 
     pdf.text(
-        "Bono Banco: $" +
+        "Descuentos: $" +
         formatoMoneda(
-            empleadoActual["BONO BANCO"]
+            empleadoActual.DESCUENTOS
         ),
         20,
-        150
-    );
+        175
+);
 
     pdf.text(
-        "Descuentos: " +
-        (empleadoActual["DESCUENTOS"] || ""),
+        "Novedades Banco: " +
+            (empleadoActual["NOVEDADES BANCO"] || ""),
         20,
-        160
-    );
+        185
+);
 
-    // TOTAL DESTACADO
     pdf.setFont("helvetica", "bold");
 
     pdf.text(
@@ -304,8 +300,8 @@ async function descargarPDF(){
             empleadoActual["TOTAL BANCOS"]
         ),
         20,
-        180
-    );
+        205
+);
 
     // PIE DE PAGINA
     pdf.setFontSize(9);
