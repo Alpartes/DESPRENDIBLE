@@ -109,6 +109,13 @@ function buscarEmpleado(){
         </p>
 
         <p>
+        <b>Bono Banco:</b>
+        $${formatoMoneda(
+            empleado["BONO BANCO"]
+        )}
+        </p>
+
+        <p>
         <b>Salud y Pensión:</b>
         $${formatoMoneda(
             empleado["SALUD Y PENSION"]
@@ -137,6 +144,13 @@ function buscarEmpleado(){
         <hr>
 
         <h3>INFORMACIÓN EFECTIVO</h3>
+
+        <p>
+        <b>Comisiones Totales:</b>
+        $${formatoMoneda(
+            empleado["COMISIONES TOTALES"]
+        )}
+        </p>
 
         <p>
         <b>Comisiones Efectivo:</b>
@@ -266,6 +280,14 @@ async function descargarPDF(){
         20,
         155
 );
+    pdf.text(
+        "Bono Banco: $" +
+        formatoMoneda(
+            empleadoActual["BONO BANCO"]
+        ),
+        20,
+        165
+);
 
     pdf.text(
         "Salud y Pension: $" +
@@ -273,7 +295,7 @@ async function descargarPDF(){
             empleadoActual["SALUD Y PENSION"]
         ),
         20,
-        165
+        175
 );
 
     pdf.text(
@@ -281,13 +303,6 @@ async function descargarPDF(){
         formatoMoneda(
             empleadoActual.DESCUENTOS
         ),
-        20,
-        175
-);
-
-    pdf.text(
-        "Novedades Banco: " +
-            (empleadoActual["NOVEDADES BANCO"] || ""),
         20,
         185
 );
@@ -308,14 +323,14 @@ async function descargarPDF(){
     pdf.setFont("helvetica", "italic");
 
     pdf.text(
-        "Portal de Nomina ALPARTES SAS",
+        "Desprendible de Nómina ALPARTES SAS",
         105,
         275,
         { align: "center" }
     );
 
     pdf.text(
-        "Desarrollo e implementacion: TU NOMBRE",
+        "Desarrollado por: Lady Pinzón",
         105,
         282,
         { align: "center" }
