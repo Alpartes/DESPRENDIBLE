@@ -2,7 +2,7 @@ let empleados = [];
 
 window.onload = function(){
 
-    fetch("empleados.xlsx?v=" + new Date().getTime())
+    fetch("empleados1.xlsx?v=" + new Date().getTime())
 
     .then(res => res.arrayBuffer())
 
