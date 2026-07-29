@@ -1,0 +1,58 @@
+body{
+
+    font-family: Arial;
+    background: #f0f2f5;
+    padding: 40px;
+
+}
+
+.contenedor{
+
+    background: white;
+    width: 700px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+
+}
+
+input{
+
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+
+}
+
+button{
+
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #0078D7;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+}
+
+#resultado{
+
+    margin-top: 30px;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+
+.logo{
+
+    width: 600px;
+
+    display: block;
+
+    margin: auto;
+
+    margin-bottom: 50px;
+
+}

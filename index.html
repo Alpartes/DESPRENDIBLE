@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Consulta Nómina</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <img src="logo.png" class="logo">
+        
+        <h1>CONSULTA DESPRENDIBLE</h1>
+
+        <input type="number"
+            id="cedula"
+            placeholder="Ingrese la cédula">
+
+        <button onclick="buscarEmpleado()">
+
+            Consultar
+
+        </button>
+
+        <div id="resultado"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
