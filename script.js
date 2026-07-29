@@ -68,7 +68,7 @@ function buscarEmpleado(){
         "resultado"
     ).innerHTML = `
 
-        <h2>${empleado.NOMBRE}</h2>
+        <h2 class="nombre-empleado">${empleado["NOMBRE"]}</h2>
 
         <hr>
 
