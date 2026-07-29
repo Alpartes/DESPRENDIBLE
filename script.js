@@ -237,7 +237,7 @@ async function descargarPDF(){
     pdf.text(String(empleadoActual.CEDULA), 50, 85);
 
     // LINEA
-    pdf.line(20, 80, 190, 90);
+    pdf.line(20, 90, 190, 90);
 
     // TITULO SECCION
     pdf.setFont("helvetica", "bold");
@@ -280,17 +280,17 @@ async function descargarPDF(){
     );
 
     pdf.text(
-        "Descuentos: $" +
+        "Bono Banco: $" +
         formatoMoneda(
-            empleadoActual.DESCUENTOS
+            empleadoActual["BONO BANCO"]
         ),
         20,
         150
     );
 
     pdf.text(
-        "Novedades Banco: " +
-        (empleadoActual["NOVEDADES BANCO"] || ""),
+        "Descuentos: " +
+        (empleadoActual["DESCUENTOS"] || ""),
         20,
         160
     );
