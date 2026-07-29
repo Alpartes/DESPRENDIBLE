@@ -11,6 +11,8 @@
 
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
@@ -18,10 +20,11 @@
     <div class="contenedor">
 
         <img src="logo.png" class="logo">
-        
-        <h1>CONSULTA DESPRENDIBLE</h1>
 
-        <input type="number"
+        <h1>DESPRENDIBLE DE NOMINA</h1>
+
+        <input
+            type="number"
             id="cedula"
             placeholder="Ingrese la cédula">
 
@@ -33,9 +36,20 @@
 
         <div id="resultado"></div>
 
+        <button
+            id="btnPdf"
+            onclick="descargarPDF()"
+            style="display:none;">
+
+            Descargar PDF
+
+        </button>
+
         <footer class="footer">
-            Desprendible de Nómina ALPARTES SAS<br>
-            Creado por: Lady Pinzon
+
+            Portal de Nómina ALPARTES SAS<br>
+            Desarrollo e implementación: TU NOMBRE
+
         </footer>
 
     </div>

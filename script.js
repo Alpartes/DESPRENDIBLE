@@ -1,8 +1,9 @@
 let empleados = [];
+let empleadoActual = null;
 
 window.onload = function(){
 
-    fetch("empleados.xlsx?v=" + new Date().getTime())
+    fetch("trabajadores.xlsx?v=" + new Date().getTime())
 
     .then(res => res.arrayBuffer())
 
@@ -23,6 +24,7 @@ window.onload = function(){
         });
 
         console.log(empleados);
+        console.log(Object.keys(empleados[0]));
 
     });
 
@@ -60,9 +62,13 @@ function buscarEmpleado(){
 
         `;
 
+        document.getElementById("btnPdf").style.display = "none";
+
         return;
 
     }
+
+    empleadoActual = empleado;
 
     document.getElementById(
         "resultado"
@@ -108,18 +114,11 @@ function buscarEmpleado(){
             empleado["SALUD Y PENSION"]
         )}
         </p>
-        
-        <p>
-        <b>Bono Banco:</b>
-        $${formatoMoneda(
-            empleado["BONO BANCO"]
-        )}
-        </p>
 
         <p>
         <b>Descuentos:</b>
         $${formatoMoneda(
-            empleado["DESCUENTOS"]
+            empleado.DESCUENTOS
         )}
         </p>
 
@@ -139,13 +138,6 @@ function buscarEmpleado(){
 
         <h3>INFORMACIÓN EFECTIVO</h3>
 
-          <p>
-        <b>Comisiones Totales:</b>
-        $${formatoMoneda(
-            empleado["COMISIONES TOTALES"]
-        )}
-        </p>
-        
         <p>
         <b>Comisiones Efectivo:</b>
         $${formatoMoneda(
@@ -154,9 +146,9 @@ function buscarEmpleado(){
         </p>
 
         <p>
-        <b>Llegas Tarde:</b>
+        <b>Llegadas Tarde:</b>
         $${formatoMoneda(
-            empleado["LLEGAS TARDE"]
+            empleado["LLEGADAS TARDE"]
         )}
         </p>
 
@@ -173,12 +165,94 @@ function buscarEmpleado(){
         </p>
 
         <p>
-        <b>Total Efectivo:</b>
+        <b>Total Efectivos:</b>
         $${formatoMoneda(
             empleado["TOTAL EFECTIVO"]
         )}
         </p>
 
     `;
+
+    document.getElementById("btnPdf").style.display = "block";
+
+}
+
+async function descargarPDF(){
+
+    if(!empleadoActual){
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    let pdf = new jsPDF();
+
+    pdf.setFontSize(18);
+    pdf.text("DESPRENDIBLE DE NOMINA", 20, 20);
+
+    pdf.setFontSize(12);
+
+    pdf.text(
+        "Empleado: " + empleadoActual.NOMBRE,
+        20,
+        40
+    );
+
+    pdf.text(
+        "Cedula: " + empleadoActual.CEDULA,
+        20,
+        50
+    );
+
+    pdf.text(
+        "Salario: $" +
+        formatoMoneda(
+            empleadoActual.SALARIO
+        ),
+        20,
+        70
+    );
+
+    pdf.text(
+        "Auxilio Transporte: $" +
+        formatoMoneda(
+            empleadoActual["AUX. TRANSPORTE"]
+        ),
+        20,
+        80
+    );
+
+    pdf.text(
+        "Rodamiento: $" +
+        formatoMoneda(
+            empleadoActual.RODAMIENTO
+        ),
+        20,
+        90
+    );
+
+    pdf.text(
+        "Total Bancos: $" +
+        formatoMoneda(
+            empleadoActual["TOTAL BANCOS"]
+        ),
+        20,
+        110
+    );
+
+    pdf.text(
+        "Total Efectivo: $" +
+        formatoMoneda(
+            empleadoActual["TOTAL EFECTIVO"]
+        ),
+        20,
+        120
+    );
+
+    pdf.save(
+        "Desprendible_" +
+        empleadoActual.CEDULA +
+        ".pdf"
+    );
 
 }
