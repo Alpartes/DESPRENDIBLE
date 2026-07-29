@@ -187,10 +187,33 @@ async function descargarPDF(){
 
     let pdf = new jsPDF();
 
+    // CARGAR LOGO
+    const logo = document.querySelector(".logo");
+
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+
+    canvas.width = logo.naturalWidth;
+    canvas.height = logo.naturalHeight;
+
+    ctx.drawImage(logo, 0, 0);
+
+    let logoBase64 = canvas.toDataURL("image/png");
+
+    // INSERTAR LOGO
+    pdf.addImage(
+        logoBase64,
+        "PNG",
+        20,
+        8,
+        70,
+        15
+    );
+
     // ENCABEZADO
-    pdf.setFontSize(20);
+    pdf.setFontSize(16);
     pdf.setFont("helvetica", "bold");
-    pdf.text("ALPARTES SAS", 105, 20, { align: "center" });
+    pdf.text("DESPRENDIBLE DE NOMINA", 105, 35, { align: "center" });
 
     pdf.setFontSize(16);
     pdf.text("DESPRENDIBLE DE NOMINA", 105, 30, { align: "center" });
@@ -198,23 +221,23 @@ async function descargarPDF(){
     // FECHA
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
-    pdf.text("Fecha de pago: 31/08/2026", 20, 45);
+    pdf.text("Fecha de pago: 31/08/2026", 20, 60);
 
     // DATOS EMPLEADO
     pdf.setFont("helvetica", "bold");
-    pdf.text("Empleado:", 20, 60);
+    pdf.text("Empleado:", 20, 75);
 
     pdf.setFont("helvetica", "normal");
-    pdf.text(empleadoActual.NOMBRE, 50, 60);
+    pdf.text(empleadoActual.NOMBRE, 50, 75);
 
     pdf.setFont("helvetica", "bold");
-    pdf.text("Cedula:", 20, 70);
+    pdf.text("Cedula:", 20, 85);
 
     pdf.setFont("helvetica", "normal");
-    pdf.text(String(empleadoActual.CEDULA), 50, 70);
+    pdf.text(String(empleadoActual.CEDULA), 50, 85);
 
     // LINEA
-    pdf.line(20, 80, 190, 80);
+    pdf.line(20, 80, 190, 90);
 
     // TITULO SECCION
     pdf.setFont("helvetica", "bold");
