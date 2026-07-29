@@ -187,30 +187,46 @@ async function descargarPDF(){
 
     let pdf = new jsPDF();
 
-    pdf.setFontSize(18);
-    pdf.text("DESPRENDIBLE DE NOMINA", 20, 20);
+    // ENCABEZADO
+    pdf.setFontSize(20);
+    pdf.setFont("helvetica", "bold");
+    pdf.text("ALPARTES SAS", 105, 20, { align: "center" });
 
-    pdf.setFontSize(12);
+    pdf.setFontSize(16);
+    pdf.text("DESPRENDIBLE DE NOMINA", 105, 30, { align: "center" });
 
-    pdf.text(
-        "Empleado: " + empleadoActual.NOMBRE,
-        20,
-        40
-    );
+    // FECHA
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.text("Fecha de pago: 31/08/2026", 20, 45);
 
-    pdf.text(
-        "Cedula: " + empleadoActual.CEDULA,
-        20,
-        50
-    );
+    // DATOS EMPLEADO
+    pdf.setFont("helvetica", "bold");
+    pdf.text("Empleado:", 20, 60);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.text(empleadoActual.NOMBRE, 50, 60);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.text("Cedula:", 20, 70);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.text(String(empleadoActual.CEDULA), 50, 70);
+
+    // LINEA
+    pdf.line(20, 80, 190, 80);
+
+    // TITULO SECCION
+    pdf.setFont("helvetica", "bold");
+    pdf.text("INFORMACION BANCO", 20, 95);
+
+    pdf.setFont("helvetica", "normal");
 
     pdf.text(
         "Salario: $" +
-        formatoMoneda(
-            empleadoActual.SALARIO
-        ),
+        formatoMoneda(empleadoActual.SALARIO),
         20,
-        70
+        110
     );
 
     pdf.text(
@@ -219,7 +235,7 @@ async function descargarPDF(){
             empleadoActual["AUX. TRANSPORTE"]
         ),
         20,
-        80
+        120
     );
 
     pdf.text(
@@ -228,25 +244,62 @@ async function descargarPDF(){
             empleadoActual.RODAMIENTO
         ),
         20,
-        90
+        130
     );
 
     pdf.text(
-        "Total Bancos: $" +
+        "Salud y Pension: $" +
+        formatoMoneda(
+            empleadoActual["SALUD Y PENSION"]
+        ),
+        20,
+        140
+    );
+
+    pdf.text(
+        "Descuentos: $" +
+        formatoMoneda(
+            empleadoActual.DESCUENTOS
+        ),
+        20,
+        150
+    );
+
+    pdf.text(
+        "Novedades Banco: " +
+        (empleadoActual["NOVEDADES BANCO"] || ""),
+        20,
+        160
+    );
+
+    // TOTAL DESTACADO
+    pdf.setFont("helvetica", "bold");
+
+    pdf.text(
+        "TOTAL BANCOS: $" +
         formatoMoneda(
             empleadoActual["TOTAL BANCOS"]
         ),
         20,
-        110
+        180
+    );
+
+    // PIE DE PAGINA
+    pdf.setFontSize(9);
+    pdf.setFont("helvetica", "italic");
+
+    pdf.text(
+        "Portal de Nomina ALPARTES SAS",
+        105,
+        275,
+        { align: "center" }
     );
 
     pdf.text(
-        "Total Efectivo: $" +
-        formatoMoneda(
-            empleadoActual["TOTAL EFECTIVO"]
-        ),
-        20,
-        120
+        "Desarrollo e implementacion: TU NOMBRE",
+        105,
+        282,
+        { align: "center" }
     );
 
     pdf.save(
