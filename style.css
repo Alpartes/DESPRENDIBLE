@@ -17,7 +17,7 @@ body{
 }
 
 input{
-    width: 50%;
+    width: 90%;
     padding: 12px;
     margin-top: 10px;
     display: block;
@@ -28,7 +28,7 @@ input{
 
 button{
 
-    width: 50%;
+    width: 90%;
     padding: 12px;
     margin-top: 20px;
     background: #0078D7;
