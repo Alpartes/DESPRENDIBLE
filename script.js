@@ -232,7 +232,7 @@ async function descargarPDF(){
     // FECHA
     pdf.setFontSize(11);
     pdf.setFont("helvetica", "normal");
-    pdf.text("Fecha de pago: 31/08/2026", 20, 70);
+    pdf.text("Fecha de pago: 05/08/2026", 20, 70);
 
     // DATOS EMPLEADO
     pdf.setFont("helvetica", "bold");
