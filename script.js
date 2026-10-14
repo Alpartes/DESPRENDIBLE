@@ -41,6 +41,20 @@ function formatoMoneda(valor){
 
 }
 
+function formatoPorcentaje(valor) {
+    
+    let numero = Number(
+        String(valor || 0)
+        .replace("%", "")
+        .replace(",", ".")
+    );
+
+    return numero.toLocaleString("es-CO", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    }) + "%";
+}
+
 function buscarEmpleado(){
 
     let cedula =
