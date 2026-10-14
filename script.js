@@ -253,9 +253,9 @@ function buscarEmpleado(){
         </p>
 
         <p>
-        <b>Porcentaje Comision:</b>
+        <b>Porcentaje Total:</b>
         ${formatoPorcentaje(
-            empleado["PORCENTAJE COMISION"]
+            empleado["PORCENTAJE TOTAL"]
         )}
         </p>
 
