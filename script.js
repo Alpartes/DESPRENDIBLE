@@ -212,21 +212,21 @@ function buscarEmpleado(){
 
         <p>
         <b>Porcentaje Ventas:</b>
-        $${formatoPorcentaje(
+        ${formatoPorcentaje(
             empleado["PORCENTAJE VENTAS"]
         )}
         </p>
 
         <p>
         <b>Rentabilidad:</b>
-        $${formatoPorcentaje(
+        ${formatoPorcentaje(
             empleado["RENTABILIDAD"]
         )}
         </p>
 
         <p>
         <b>Porcentaje Rentabilidad:</b>
-        $${formatoPorcentaje(
+        ${formatoPorcentaje(
             empleado["PORCENTAJE RENTABILIDAD"]
         )}
         </p>
@@ -240,7 +240,7 @@ function buscarEmpleado(){
 
         <p>
         <b>Porcentaje Cartera:</b>
-        $${formatoPorcentaje(
+        ${formatoPorcentaje(
             empleado["PORCENTAJE CARTERA"]
         )}
         </p>
@@ -254,7 +254,7 @@ function buscarEmpleado(){
 
         <p>
         <b>Porcentaje Comision:</b>
-        $${formatoPorcentaje(
+        ${formatoPorcentaje(
             empleado["PORCENTAJE COMISION"]
         )}
         </p>
