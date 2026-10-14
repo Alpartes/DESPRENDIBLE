@@ -215,7 +215,7 @@ function buscarEmpleado(){
     </p>
 </div>
 
-<div class="fila-comision">
+<div class="fila-comision rentabilidad">
     <p>
         <b>Rentabilidad:</b>
         $${formatoPorcentaje(empleado["RENTABILIDAD"])}
@@ -227,7 +227,7 @@ function buscarEmpleado(){
     </p>
 </div>
 
-<div class="fila-comision">
+<div class="fila-comision cartera">
     <p>
         <b>Cartera:</b>
         $${formatoMoneda(empleado["CARTERA"])}
@@ -239,7 +239,7 @@ function buscarEmpleado(){
     </p>
 </div>
 
-<div class="fila-comision">
+<div class="fila-comision comision-total">
     <p>
         <b>Comisión Total:</b>
         $${formatoMoneda(empleado["COMISION TOTAL"])}

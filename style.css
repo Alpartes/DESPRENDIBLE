@@ -91,10 +91,22 @@ h1{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 40px;
+    gap: 80px;
     flex-wrap: wrap;
 }
 
 .fila-comision p {
     margin: 8px 0;
+}
+
+.fila-comision.rentabilidad {
+    gap: 165px;
+}
+
+.fila-comision.cartera {
+    gap: 165px;
+}
+
+.fila-comision.comision-total {
+    gap: 107px;
 }
