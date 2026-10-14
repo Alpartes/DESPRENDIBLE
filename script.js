@@ -183,57 +183,57 @@ function buscarEmpleado(){
         <h3>INFORMACIÓN COMISIONES</h3>
 
         <p>
-        <b>ventas totales:</b>
+        <b>Ventas Totales:</b>
         $${formatoMoneda(
             empleado["VENTAS TOTALES"]
         )}
         </p>
 
         <p>
-        <b>porcentaje ventas:</b>
-        $${formatoMoneda(
+        <b>Porcentaje Ventas:</b>
+        $${formatoPorcentaje(
             empleado["PORCENTAJE VENTAS"]
         )}
         </p>
 
         <p>
-        <b>rentabilidad:</b>
+        <b>Rentabilidad:</b>
         $${formatoMoneda(
             empleado["RENTABILIDAD"]
         )}
         </p>
 
         <p>
-        <b>porcentaje rentabilidad:</b>
-        $${formatoMoneda(
+        <b>Porcentaje Rentabilidad:</b>
+        $${formatoPorcentaje(
             empleado["PORCENTAJE RENTABILIDAD"]
         )}
         </p>
 
         <p>
-        <b>cartera:</b>
+        <b>Cartera:</b>
         $${formatoMoneda(
             empleado["CARTERA"]
         )}
         </p>
 
         <p>
-        <b>porcentaje cartera:</b>
-        $${formatoMoneda(
+        <b>Porcentaje Cartera:</b>
+        $${formatoPorcentaje(
             empleado["PORCENTAJE CARTERA"]
         )}
         </p>
 
         <p>
-        <b>comision total:</b>
+        <b>Comision Total:</b>
         $${formatoMoneda(
             empleado["COMISION TOTAL"]
         )}
         </p>
 
         <p>
-        <b>porcentaje comision:</b>
-        $${formatoMoneda(
+        <b>Porcentaje Comision:</b>
+        $${formatoPorcentaje(
             empleado["PORCENTAJE COMISION"]
         )}
         </p>
