@@ -198,7 +198,7 @@ function buscarEmpleado(){
 
         <p>
         <b>Rentabilidad:</b>
-        $${formatoMoneda(
+        $${formatoPorcentaje(
             empleado["RENTABILIDAD"]
         )}
         </p>
