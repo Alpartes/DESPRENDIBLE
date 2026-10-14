@@ -201,63 +201,55 @@ function buscarEmpleado(){
 
         <hr>
 
-        <h3>INFORMACIÓN COMISIONES</h3>
+       <h3>INFORMACIÓN COMISIONES</h3>
 
-        <p>
+<div class="fila-comision">
+    <p>
         <b>Ventas Totales:</b>
-        $${formatoMoneda(
-            empleado["VENTAS TOTALES"]
-        )}
-        </p>
+        $${formatoMoneda(empleado["VENTAS TOTALES"])}
+    </p>
 
-        <p>
+    <p>
         <b>Porcentaje Ventas:</b>
-        ${formatoPorcentaje(
-            empleado["PORCENTAJE VENTAS"]
-        )}
-        </p>
+        ${formatoPorcentaje(empleado["PORCENTAJE VENTAS"])}
+    </p>
+</div>
 
-        <p>
+<div class="fila-comision">
+    <p>
         <b>Rentabilidad:</b>
-        ${formatoPorcentaje(
-            empleado["RENTABILIDAD"]
-        )}
-        </p>
+        $${formatoPorcentaje(empleado["RENTABILIDAD"])}
+    </p>
 
-        <p>
+    <p>
         <b>Porcentaje Rentabilidad:</b>
-        ${formatoPorcentaje(
-            empleado["PORCENTAJE RENTABILIDAD"]
-        )}
-        </p>
+        ${formatoPorcentaje(empleado["PORCENTAJE RENTABILIDAD"])}
+    </p>
+</div>
 
-        <p>
+<div class="fila-comision">
+    <p>
         <b>Cartera:</b>
-        $${formatoMoneda(
-            empleado["CARTERA"]
-        )}
-        </p>
+        $${formatoMoneda(empleado["CARTERA"])}
+    </p>
 
-        <p>
+    <p>
         <b>Porcentaje Cartera:</b>
-        ${formatoPorcentaje(
-            empleado["PORCENTAJE CARTERA"]
-        )}
-        </p>
+        ${formatoPorcentaje(empleado["PORCENTAJE CARTERA"])}
+    </p>
+</div>
 
-        <p>
-        <b>Comision Total:</b>
-        $${formatoMoneda(
-            empleado["COMISION TOTAL"]
-        )}
-        </p>
+<div class="fila-comision">
+    <p>
+        <b>Comisión Total:</b>
+        $${formatoMoneda(empleado["COMISION TOTAL"])}
+    </p>
 
-        <p>
+    <p>
         <b>Porcentaje Total:</b>
-        ${formatoPorcentaje(
-            empleado["PORCENTAJE TOTAL"]
-        )}
-        </p>
+        ${formatoPorcentaje(empleado["PORCENTAJE TOTAL"])}
+    </p>
+</div>
 
     `;
 
