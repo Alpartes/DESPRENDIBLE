@@ -42,15 +42,22 @@ function formatoMoneda(valor){
 }
 
 function formatoPorcentaje(valor) {
-    
+    if (valor === null || valor === undefined || valor === "") {
+        return "0%";
+    }
+
     let numero = Number(
-        String(valor || 0)
-        .replace("%", "")
-        .replace(",", ".")
+        String(valor)
+            .replace("%", "")
+            .replace(",", ".")
+            .trim()
     );
 
+    if (isNaN(numero)) {
+        return "0%";
+    }
+
     return numero.toLocaleString("es-CO", {
-        minimumFractionDigits: 0,
         maximumFractionDigits: 2
     }) + "%";
 }
