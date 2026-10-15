@@ -91,7 +91,7 @@ h1{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 80px;
+    gap: 110px;
     flex-wrap: wrap;
 }
 
@@ -100,7 +100,7 @@ h1{
 }
 
 .fila-comision.rentabilidad {
-    gap: 165px;
+    gap: 125px;
 }
 
 .fila-comision.cartera {

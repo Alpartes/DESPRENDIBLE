@@ -1,6 +1,62 @@
 let empleados = [];
 let empleadoActual = null;
 
+// Cédulas que tendrán columnas ocultas
+const cedulasRestringidas = [
+    "1006116706",
+    "1000795016",
+    "1023029896",
+    "1015473856",
+    "1003533086",
+    "1053330769",
+    "1003483344",
+    "52114146",
+];
+
+// Columnas que no se mostrarán a esas cédulas
+const columnasOcultas = [
+    "COMISIONES EFECTIVO",
+    "LLEGADAS TARDE",
+    "DESCUENTOS EF",
+    "NOVEDADES EFECTIVO",
+    "TOTAL EFECTIVO",
+    "VENTAS TOTALES",
+    "PORCENTAJE VENTAS",
+    "RENTABILIDAD",
+    "PORCENTAJE RENTABILIDAD",
+    "CARTERA",
+    "PORCENTAJE CARTERA",
+    "COMISION TOTAL",
+    "PORCENTAJE TOTAL"
+];
+
+// Cédula que tendrá una visualización especial
+const cedulaEspecial = "1001045472";
+
+// Columnas que podrá ver esa cédula
+const columnasPermitidas = [
+    "SALARIO",
+    "AUX. TRANSPORTE",
+    "SALUD Y PENSION",
+    "DESCUENTOS",
+    "NOVEDADES BANCO",
+    "BONO BANCO",
+    "TOTAL BANCOS",
+    "COMISIONES EFECTIVO",
+    "LLEGADAS TARDE",
+    "DESCUENTOS EF",
+    "NOVEDADES EFECTIVO",
+    "TOTAL EFECTIVO",
+    "VENTAS TOTALES",
+    "COMISION VENTAS",
+    "VENTAS MAYOR",
+    "COMISION MAYOR",
+    "VENTAS CALLE",
+    "COMISION CALLE",
+    "COMISION TOTAL",
+
+];
+
 window.onload = function(){
 
     fetch("empleados.xlsx?v=" + new Date().getTime())
@@ -64,6 +120,24 @@ function formatoPorcentaje(valor) {
 
 function buscarEmpleado(){
 
+function mostrarCampo(empleado, columna, contenido) {
+
+    const cedula = String(empleado.CEDULA).trim();
+
+    // Para la cédula especial, mostrar solo columnas permitidas
+    if (cedula === cedulaEspecial) {
+        return columnasPermitidas.includes(columna)
+            ? contenido
+            : "";
+    }
+
+    // Para las demás cédulas, conservar las restricciones anteriores
+    const restringido =
+        cedulasRestringidas.includes(cedula) &&
+        columnasOcultas.includes(columna);
+
+    return restringido ? "" : contenido;
+}
     let cedula =
     document.getElementById("cedula").value;
 
@@ -164,94 +238,103 @@ function buscarEmpleado(){
 
         <hr>
 
+        ${mostrarCampo(empleado, "COMISIONES EFECTIVO", `
         <h3>INFORMACIÓN EFECTIVO</h3>
+    `)}
 
-        <p>
-        <b>Comisiones Efectivo:</b>
-        $${formatoMoneda(
-            empleado["COMISIONES EFECTIVO"]
-        )}
-        </p>
+ ${mostrarCampo(empleado, "COMISIONES EFECTIVO", `
+    <p>
+    <b>Comisiones Efectivo:</b>
+    $${formatoMoneda(empleado["COMISIONES EFECTIVO"])}
+    </p>
+`)}
 
-        <p>
-        <b>Llegadas Tarde:</b>
-        $${formatoMoneda(
-            empleado["LLEGADAS TARDE"]
-        )}
-        </p>
+${mostrarCampo(empleado, "LLEGADAS TARDE", `
+    <p>
+    <b>Llegadas Tarde:</b>
+    $${formatoMoneda(empleado["LLEGADAS TARDE"])}
+    </p>
+`)}
 
-        <p>
-        <b>Descuentos EF:</b>
-        $${formatoMoneda(
-            empleado["DESCUENTOS EF"]
-        )}
-        </p>
+${mostrarCampo(empleado, "DESCUENTOS EF", `
+    <p>
+    <b>Descuentos EF:</b>
+    $${formatoMoneda(empleado["DESCUENTOS EF"])}
+    </p>
+`)}
 
-        <p>
-        <b>Novedades Efectivo:</b>
-        ${empleado["NOVEDADES EFECTIVO"] || ""}
-        </p>
+${mostrarCampo(empleado, "NOVEDADES EFECTIVO", `
+    <p>
+    <b>Novedades Efectivo:</b>
+    ${empleado["NOVEDADES EFECTIVO"] || ""}
+    </p>
+`)}
 
-        <p>
-        <b>Total Efectivos:</b>
-        $${formatoMoneda(
-            empleado["TOTAL EFECTIVO"]
-        )}
-        </p>
+${mostrarCampo(empleado, "TOTAL EFECTIVO", `
+    <p>
+    <b>Total Efectivos:</b>
+    $${formatoMoneda(empleado["TOTAL EFECTIVO"])}
+    </p>
+`)}
 
         <hr>
 
-       <h3>INFORMACIÓN COMISIONES</h3>
+     ${mostrarCampo(empleado, "COMISIONES EFECTIVO", `
+        <h3>INFORMACIÓN COMISIONES</h3>
+    `)}
 
+${mostrarCampo(empleado, "VENTAS TOTALES", `
 <div class="fila-comision">
     <p>
         <b>Ventas Totales:</b>
         $${formatoMoneda(empleado["VENTAS TOTALES"])}
     </p>
-
     <p>
         <b>Porcentaje Ventas:</b>
         ${formatoPorcentaje(empleado["PORCENTAJE VENTAS"])}
     </p>
 </div>
+`)}
 
+${mostrarCampo(empleado, "RENTABILIDAD", `
 <div class="fila-comision rentabilidad">
     <p>
         <b>Rentabilidad:</b>
-        $${formatoPorcentaje(empleado["RENTABILIDAD"])}
+        $${formatoMoneda(empleado["RENTABILIDAD"])}
     </p>
-
     <p>
         <b>Porcentaje Rentabilidad:</b>
         ${formatoPorcentaje(empleado["PORCENTAJE RENTABILIDAD"])}
     </p>
 </div>
+`)}
 
+${mostrarCampo(empleado, "CARTERA", `
 <div class="fila-comision cartera">
     <p>
         <b>Cartera:</b>
         $${formatoMoneda(empleado["CARTERA"])}
     </p>
-
     <p>
         <b>Porcentaje Cartera:</b>
         ${formatoPorcentaje(empleado["PORCENTAJE CARTERA"])}
     </p>
 </div>
+`)}
 
+${mostrarCampo(empleado, "COMISION TOTAL", `
 <div class="fila-comision comision-total">
     <p>
         <b>Comisión Total:</b>
         $${formatoMoneda(empleado["COMISION TOTAL"])}
     </p>
-
     <p>
         <b>Porcentaje Total:</b>
         ${formatoPorcentaje(empleado["PORCENTAJE TOTAL"])}
     </p>
 </div>
-
-    `;
+`)}
+    `; 
 
     document.getElementById("btnPdf").style.display = "block";
 
