@@ -86,27 +86,3 @@ h1{
     text-align: center;
     margin-bottom: 30px;
 }
-
-.fila-comision {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 110px;
-    flex-wrap: wrap;
-}
-
-.fila-comision p {
-    margin: 8px 0;
-}
-
-.fila-comision.rentabilidad {
-    gap: 125px;
-}
-
-.fila-comision.cartera {
-    gap: 165px;
-}
-
-.fila-comision.comision-total {
-    gap: 107px;
-}
