@@ -1,20 +1,60 @@
 let empleados = [];
 let empleadoActual = null;
 
-// Cédulas que tendrán columnas ocultas
-const cedulasRestringidas = [
+
+ // Grupo 1: solo información bancaria
+const cedulasSoloBanco = [
+    "52114146",
     "1006116706",
     "1000795016",
+    "79593400",
     "1023029896",
     "1015473856",
     "1003533086",
     "1053330769",
-    "1003483344",
-    "52114146",
+    "1003483344"
 ];
 
-// Columnas que no se mostrarán a esas cédulas
-const columnasOcultas = [
+// Grupo 2: banco, efectivo y comisiones generales
+const cedulasBancoEfectivo = [
+    "94288721",
+    "1001200622",
+    "80875830",
+    "1193092448",
+    "79910037",
+    "1028660836",
+];
+
+// Grupo 3: cédula con visualización especial
+const cedulaEspecial = "1001045472";
+
+// Grupo 4: comisiones con columnas específicas
+const cedulasComisionesEspecificas = [
+    "1013673759"
+];
+
+// Columnas permitidas para el grupo 1
+const columnasSoloBanco = [
+    "SALARIO",
+    "AUX. TRANSPORTE",
+    "RODAMIENTO",
+    "SALUD Y PENSION",
+    "BONO BANCO",
+    "DESCUENTOS",
+    "NOVEDADES BANCO",
+    "TOTAL BANCOS"
+];
+
+// Columnas permitidas para el grupo 2
+const columnasBancoEfectivo = [
+    "SALARIO",
+    "AUX. TRANSPORTE",
+    "RODAMIENTO",
+    "SALUD Y PENSION",
+    "BONO BANCO",
+    "DESCUENTOS",
+    "NOVEDADES BANCO",
+    "TOTAL BANCOS",
     "COMISIONES EFECTIVO",
     "LLEGADAS TARDE",
     "DESCUENTOS EF",
@@ -24,23 +64,21 @@ const columnasOcultas = [
     "PORCENTAJE VENTAS",
     "RENTABILIDAD",
     "PORCENTAJE RENTABILIDAD",
-    "CARTERA",
+    "CARTERa VENCIDA",
     "PORCENTAJE CARTERA",
     "COMISION TOTAL",
     "PORCENTAJE TOTAL"
 ];
 
-// Cédula que tendrá una visualización especial
-const cedulaEspecial = "1001045472";
-
-// Columnas que podrá ver esa cédula
+// Columnas permitidas para la cédula especial
 const columnasPermitidas = [
     "SALARIO",
     "AUX. TRANSPORTE",
+    "RODAMIENTO",
     "SALUD Y PENSION",
+    "BONO BANCO",
     "DESCUENTOS",
     "NOVEDADES BANCO",
-    "BONO BANCO",
     "TOTAL BANCOS",
     "COMISIONES EFECTIVO",
     "LLEGADAS TARDE",
@@ -53,8 +91,14 @@ const columnasPermitidas = [
     "COMISION MAYOR",
     "VENTAS CALLE",
     "COMISION CALLE",
-    "COMISION TOTAL",
+    "COMISION TOTAL"
+];
 
+// Columnas de comisiones específicas para el grupo 4
+const columnasComisionesEspecificas = [
+    "VENTAS TOTALES",
+    "PORCENTAJE VENTAS",
+    "COMISION TOTAL"
 ];
 
 window.onload = function(){
@@ -118,226 +162,302 @@ function formatoPorcentaje(valor) {
     }) + "%";
 }
 
-function buscarEmpleado(){
 
-function mostrarCampo(empleado, columna, contenido) {
+function buscarEmpleado() {
 
-    const cedula = String(empleado.CEDULA).trim();
+    const cedula = document.getElementById("cedula").value.trim();
 
-    // Para la cédula especial, mostrar solo columnas permitidas
-    if (cedula === cedulaEspecial) {
+    const empleado = empleados.find(
+        emp => String(emp.CEDULA).trim() === cedula
+    );
+
+    if (!empleado) {
+        document.getElementById("resultado").innerHTML = `
+            <h2>Empleado no encontrado</h2>
+        `;
+
+        document.getElementById("btnPdf").style.display = "none";
+        empleadoActual = null;
+        return;
+    }
+
+    empleadoActual = empleado;
+
+    // Determinar qué campos puede ver el trabajador
+    function mostrarCampo(columna, contenido) {
+
+    const cedulaEmpleado = String(empleado.CEDULA).trim();
+
+    // Grupo 1: únicamente información bancaria
+    if (cedulasSoloBanco.includes(cedulaEmpleado)) {
+        return columnasSoloBanco.includes(columna)
+            ? contenido
+            : "";
+    }
+
+    // Grupo 2: información bancaria, efectivo y comisiones generales
+    if (cedulasBancoEfectivo.includes(cedulaEmpleado)) {
+        return columnasBancoEfectivo.includes(columna)
+            ? contenido
+            : "";
+    }
+
+    // Grupo 3: visualización especial
+    if (cedulaEmpleado === String(cedulaEspecial).trim()) {
         return columnasPermitidas.includes(columna)
             ? contenido
             : "";
     }
 
-    // Para las demás cédulas, conservar las restricciones anteriores
-    const restringido =
-        cedulasRestringidas.includes(cedula) &&
-        columnasOcultas.includes(columna);
+    // Grupo 4: comisiones con columnas específicas
+       if (cedulasComisionesEspecificas.includes(cedulaEmpleado)) {
 
-    return restringido ? "" : contenido;
+           const columnasBancoYEfectivo = [
+                "SALARIO",
+                "AUX. TRANSPORTE",
+                "RODAMIENTO",
+                "SALUD Y PENSION",
+                "BONO BANCO",
+                "DESCUENTOS",
+                "NOVEDADES BANCO",
+                "TOTAL BANCOS",
+                "COMISIONES EFECTIVO",
+                "LLEGADAS TARDE",
+                "DESCUENTOS EF",
+                "NOVEDADES EFECTIVO",
+                "TOTAL EFECTIVO"
+            ];
+
+            const columnasGrupo4 = [
+                ...columnasBancoYEfectivo,
+                "VENTAS TOTALES",
+                "PORCENTAJE VENTAS",
+                "COMISION TOTAL"
+            ];
+
+            return columnasGrupo4.includes(columna)
+                ? contenido
+                : "";
+        }
+
+    // Los demás trabajadores conservan la visualización habitual
+    return contenido;
+    
 }
-    let cedula =
-    document.getElementById("cedula").value;
 
-    let empleado = empleados.find(emp =>
-
-        emp.CEDULA == cedula
-
-    );
-
-    if(!empleado){
-
-        document.getElementById(
-            "resultado"
-        ).innerHTML = `
-
-            <h2>Empleado no encontrado</h2>
-
-        `;
-
-        document.getElementById("btnPdf").style.display = "none";
-
-        return;
-
-    }
-
-    empleadoActual = empleado;
-
-    document.getElementById(
-        "resultado"
-    ).innerHTML = `
+    document.getElementById("resultado").innerHTML = `
 
         <h2 class="nombre-empleado">${empleado["NOMBRE"]}</h2>
 
         <hr>
 
         <p>
-        <b>Cédula:</b>
-        ${empleado.CEDULA}
+            <b>Cédula:</b>
+            ${empleado.CEDULA}
         </p>
 
         <hr>
 
-        <h3>INFORMACIÓN BANCO</h3>
+        ${mostrarCampo("SALARIO", `
+            <h3>INFORMACIÓN BANCO</h3>
+        `)}
 
-        <p>
-        <b>Salario:</b>
-        $${formatoMoneda(
-            empleado.SALARIO
-        )}
-        </p>
+        ${mostrarCampo("SALARIO", `
+            <p>
+                <b>Salario:</b>
+                $${formatoMoneda(empleado["SALARIO"])}
+            </p>
+        `)}
 
-        <p>
-        <b>Auxilio Transporte:</b>
-        $${formatoMoneda(
-            empleado["AUX. TRANSPORTE"]
-        )}
-        </p>
+        ${mostrarCampo("AUX. TRANSPORTE", `
+            <p>
+                <b>Auxilio Transporte:</b>
+                $${formatoMoneda(empleado["AUX. TRANSPORTE"])}
+            </p>
+        `)}
 
-        <p>
-        <b>Rodamiento:</b>
-        $${formatoMoneda(
-            empleado.RODAMIENTO
-        )}
-        </p>
+        ${mostrarCampo("RODAMIENTO", `
+            <p>
+                <b>Rodamiento:</b>
+                $${formatoMoneda(empleado["RODAMIENTO"])}
+            </p>
+        `)}
 
-        <p>
-        <b>Bono Banco:</b>
-        $${formatoMoneda(
-            empleado["BONO BANCO"]
-        )}
-        </p>
+        ${mostrarCampo("BONO BANCO", `
+            <p>
+                <b>Bono Banco:</b>
+                $${formatoMoneda(empleado["BONO BANCO"])}
+            </p>
+        `)}
 
-        <p>
-        <b>Salud y Pensión:</b>
-        $${formatoMoneda(
-            empleado["SALUD Y PENSION"]
-        )}
-        </p>
+        ${mostrarCampo("SALUD Y PENSION", `
+            <p>
+                <b>Salud y Pensión:</b>
+                $${formatoMoneda(empleado["SALUD Y PENSION"])}
+            </p>
+        `)}
 
-        <p>
-        <b>Descuentos:</b>
-        $${formatoMoneda(
-            empleado.DESCUENTOS
-        )}
-        </p>
+        ${mostrarCampo("DESCUENTOS", `
+            <p>
+                <b>Descuentos:</b>
+                $${formatoMoneda(empleado["DESCUENTOS"])}
+            </p>
+        `)}
 
-        <p>
-        <b>Novedades Banco:</b>
-        ${empleado["NOVEDADES BANCO"] || ""}
-        </p>
+        ${mostrarCampo("NOVEDADES BANCO", `
+            <p>
+                <b>Novedades Banco:</b>
+                ${empleado["NOVEDADES BANCO"] || ""}
+            </p>
+        `)}
 
-        <p>
-        <b>Total Bancos:</b>
-        $${formatoMoneda(
-            empleado["TOTAL BANCOS"]
-        )}
-        </p>
-
-        <hr>
-
-        ${mostrarCampo(empleado, "COMISIONES EFECTIVO", `
-        <h3>INFORMACIÓN EFECTIVO</h3>
-    `)}
-
- ${mostrarCampo(empleado, "COMISIONES EFECTIVO", `
-    <p>
-    <b>Comisiones Efectivo:</b>
-    $${formatoMoneda(empleado["COMISIONES EFECTIVO"])}
-    </p>
-`)}
-
-${mostrarCampo(empleado, "LLEGADAS TARDE", `
-    <p>
-    <b>Llegadas Tarde:</b>
-    $${formatoMoneda(empleado["LLEGADAS TARDE"])}
-    </p>
-`)}
-
-${mostrarCampo(empleado, "DESCUENTOS EF", `
-    <p>
-    <b>Descuentos EF:</b>
-    $${formatoMoneda(empleado["DESCUENTOS EF"])}
-    </p>
-`)}
-
-${mostrarCampo(empleado, "NOVEDADES EFECTIVO", `
-    <p>
-    <b>Novedades Efectivo:</b>
-    ${empleado["NOVEDADES EFECTIVO"] || ""}
-    </p>
-`)}
-
-${mostrarCampo(empleado, "TOTAL EFECTIVO", `
-    <p>
-    <b>Total Efectivos:</b>
-    $${formatoMoneda(empleado["TOTAL EFECTIVO"])}
-    </p>
-`)}
+        ${mostrarCampo("TOTAL BANCOS", `
+            <p>
+                <b>Total Bancos:</b>
+                $${formatoMoneda(empleado["TOTAL BANCOS"])}
+            </p>
+        `)}
 
         <hr>
 
-     ${mostrarCampo(empleado, "COMISIONES EFECTIVO", `
-        <h3>INFORMACIÓN COMISIONES</h3>
-    `)}
+        ${mostrarCampo("COMISIONES EFECTIVO", `
+            <h3>INFORMACIÓN EFECTIVO</h3>
+        `)}
 
-${mostrarCampo(empleado, "VENTAS TOTALES", `
-<div class="fila-comision">
-    <p>
-        <b>Ventas Totales:</b>
-        $${formatoMoneda(empleado["VENTAS TOTALES"])}
-    </p>
-    <p>
-        <b>Porcentaje Ventas:</b>
-        ${formatoPorcentaje(empleado["PORCENTAJE VENTAS"])}
-    </p>
-</div>
-`)}
+        ${mostrarCampo("COMISIONES EFECTIVO", `
+            <p>
+                <b>Comisiones Efectivo:</b>
+                $${formatoMoneda(empleado["COMISIONES EFECTIVO"])}
+            </p>
+        `)}
 
-${mostrarCampo(empleado, "RENTABILIDAD", `
-<div class="fila-comision rentabilidad">
-    <p>
-        <b>Rentabilidad:</b>
-        $${formatoMoneda(empleado["RENTABILIDAD"])}
-    </p>
-    <p>
-        <b>Porcentaje Rentabilidad:</b>
-        ${formatoPorcentaje(empleado["PORCENTAJE RENTABILIDAD"])}
-    </p>
-</div>
-`)}
+        ${mostrarCampo("LLEGADAS TARDE", `
+            <p>
+                <b>Llegadas Tarde:</b>
+                $${formatoMoneda(empleado["LLEGADAS TARDE"])}
+            </p>
+        `)}
 
-${mostrarCampo(empleado, "CARTERA", `
-<div class="fila-comision cartera">
-    <p>
-        <b>Cartera:</b>
-        $${formatoMoneda(empleado["CARTERA"])}
-    </p>
-    <p>
-        <b>Porcentaje Cartera:</b>
-        ${formatoPorcentaje(empleado["PORCENTAJE CARTERA"])}
-    </p>
-</div>
-`)}
+        ${mostrarCampo("DESCUENTOS EF", `
+            <p>
+                <b>Descuentos EF:</b>
+                $${formatoMoneda(empleado["DESCUENTOS EF"])}
+            </p>
+        `)}
 
-${mostrarCampo(empleado, "COMISION TOTAL", `
-<div class="fila-comision comision-total">
-    <p>
-        <b>Comisión Total:</b>
-        $${formatoMoneda(empleado["COMISION TOTAL"])}
-    </p>
-    <p>
-        <b>Porcentaje Total:</b>
-        ${formatoPorcentaje(empleado["PORCENTAJE TOTAL"])}
-    </p>
-</div>
-`)}
-    `; 
+        ${mostrarCampo("NOVEDADES EFECTIVO", `
+            <p>
+                <b>Novedades Efectivo:</b>
+                ${empleado["NOVEDADES EFECTIVO"] || ""}
+            </p>
+        `)}
+
+        ${mostrarCampo("TOTAL EFECTIVO", `
+            <p>
+                <b>Total Efectivo:</b>
+                $${formatoMoneda(empleado["TOTAL EFECTIVO"])}
+            </p>
+        `)}
+
+        <hr>
+
+        ${mostrarCampo("VENTAS TOTALES", `
+            <h3>INFORMACIÓN COMISIONES</h3>
+        `)}
+
+        ${mostrarCampo("VENTAS TOTALES", `
+            <p>
+                <b>Ventas Totales:</b>
+                $${formatoMoneda(empleado["VENTAS TOTALES"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("PORCENTAJE VENTAS", `
+            <p>
+                <b>Porcentaje Ventas:</b>
+                ${formatoPorcentaje(empleado["PORCENTAJE VENTAS"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("RENTABILIDAD", `
+            <p>
+                <b>Rentabilidad:</b>
+                $${formatoPorcentaje(empleado["RENTABILIDAD"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("PORCENTAJE RENTABILIDAD", `
+            <p>
+                <b>Porcentaje Rentabilidad:</b>
+                ${formatoPorcentaje(empleado["PORCENTAJE RENTABILIDAD"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("CARTERA VENCIDA", `
+            <p>
+                <b>Cartera Vencida:</b>
+                $${formatoMoneda(empleado["CARTERA VENCIDA"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("PORCENTAJE CARTERA", `
+            <p>
+                <b>Porcentaje Cartera:</b>
+                ${formatoPorcentaje(empleado["PORCENTAJE CARTERA"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("COMISION VENTAS", `
+            <p>
+                <b>Comisión Ventas:</b>
+                $${formatoMoneda(empleado["COMISION VENTAS"])}
+            </p>
+        `)}
+        ${mostrarCampo("VENTAS MAYOR", `
+            <p>
+                <b>Ventas Mayor:</b>
+                $${formatoMoneda(empleado["VENTAS MAYOR"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("COMISION MAYOR", `
+            <p>
+                <b>Comisión Mayor:</b>
+                $${formatoMoneda(empleado["COMISION MAYOR"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("VENTAS CALLE", `
+            <p>
+                <b>Ventas Calle:</b>
+                $${formatoMoneda(empleado["VENTAS CALLE"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("COMISION CALLE", `
+            <p>
+                <b>Comisión Calle:</b>
+                $${formatoMoneda(empleado["COMISION CALLE"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("COMISION TOTAL", `
+            <p>
+                <b>Comisión Total:</b>
+                $${formatoMoneda(empleado["COMISION TOTAL"])}
+            </p>
+        `)}
+
+        ${mostrarCampo("PORCENTAJE TOTAL", `
+            <P>
+                <b>Porcentaje Total:</b>
+                $${formatoPorcentaje(empleado["PORCENTAJE TOTAL"])}
+            </P>
+        `)}
+
+    `;
 
     document.getElementById("btnPdf").style.display = "block";
-
 }
 
 async function descargarPDF(){
@@ -377,11 +497,6 @@ async function descargarPDF(){
     pdf.setFontSize(16);
     pdf.setFont("helvetica", "bold");
     pdf.text("DESPRENDIBLE DE NOMINA", 105, 60, { align: "center" });
-
-    // FECHA
-    pdf.setFontSize(11);
-    pdf.setFont("helvetica", "normal");
-    pdf.text("Fecha de pago: 05/SEP/2026", 20, 70);
 
     // DATOS EMPLEADO
     pdf.setFont("helvetica", "bold");
