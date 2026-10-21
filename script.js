@@ -365,95 +365,108 @@ function buscarEmpleado() {
             <h3>INFORMACIÓN COMISIONES</h3>
         `)}
 
-        ${mostrarCampo("VENTAS TOTALES", `
-            <p>
-                <b>Ventas Totales:</b>
-                $${formatoMoneda(empleado["VENTAS TOTALES"])}
-            </p>
-        `)}
+        <div class="fila-comision">
+            ${mostrarCampo("VENTAS TOTALES", `
+                <p>
+                    <b>Ventas Totales:</b>
+                    $${formatoMoneda(empleado["VENTAS TOTALES"])}
+                </p>
+            `)}
 
-        ${mostrarCampo("PORCENTAJE VENTAS", `
-            <p>
-                <b>Porcentaje Ventas:</b>
-                ${formatoPorcentaje(empleado["PORCENTAJE VENTAS"])}
-            </p>
-        `)}
-
-        ${mostrarCampo("RENTABILIDAD", `
-            <p>
-                <b>Rentabilidad:</b>
-                $${formatoPorcentaje(empleado["RENTABILIDAD"])}
-            </p>
-        `)}
-
-        ${mostrarCampo("PORCENTAJE RENTABILIDAD", `
-            <p>
-                <b>Porcentaje Rentabilidad:</b>
-                ${formatoPorcentaje(empleado["PORCENTAJE RENTABILIDAD"])}
-            </p>
-        `)}
-
-        ${mostrarCampo("CARTERA VENCIDA", `
-            <p>
-                <b>Cartera Vencida:</b>
-                $${formatoMoneda(empleado["CARTERA VENCIDA"])}
-            </p>
-        `)}
-
-        ${mostrarCampo("PORCENTAJE CARTERA", `
-            <p>
-                <b>Porcentaje Cartera:</b>
-                ${formatoPorcentaje(empleado["PORCENTAJE CARTERA"])}
-            </p>
-        `)}
-
-        ${mostrarCampo("COMISION VENTAS", `
+            ${mostrarCampo("COMISION VENTAS", `
             <p>
                 <b>Comisión Ventas:</b>
                 $${formatoMoneda(empleado["COMISION VENTAS"])}
             </p>
-        `)}
-        ${mostrarCampo("VENTAS MAYOR", `
-            <p>
-                <b>Ventas Mayor:</b>
-                $${formatoMoneda(empleado["VENTAS MAYOR"])}
-            </p>
-        `)}
+            `)}
 
-        ${mostrarCampo("COMISION MAYOR", `
-            <p>
-                <b>Comisión Mayor:</b>
-                $${formatoMoneda(empleado["COMISION MAYOR"])}
-            </p>
-        `)}
+            ${mostrarCampo("PORCENTAJE VENTAS", `
+                <p>
+                    <b>Porcentaje Ventas:</b>
+                    ${formatoPorcentaje(empleado["PORCENTAJE VENTAS"])}
+                </p>
+            `)}
+        </div>
 
-        ${mostrarCampo("VENTAS CALLE", `
-            <p>
-                <b>Ventas Calle:</b>
-                $${formatoMoneda(empleado["VENTAS CALLE"])}
-            </p>
-        `)}
+        <div class="fila-comision">
+            ${mostrarCampo("RENTABILIDAD", `
+                <p>
+                    <b>Rentabilidad:</b>
+                    $${formatoPorcentaje(empleado["RENTABILIDAD"])}
+                </p>
+            `)}
 
-        ${mostrarCampo("COMISION CALLE", `
-            <p>
-                <b>Comisión Calle:</b>
-                $${formatoMoneda(empleado["COMISION CALLE"])}
-            </p>
-        `)}
+            ${mostrarCampo("PORCENTAJE RENTABILIDAD", `
+                <p>
+                    <b>Porcentaje Rentabilidad:</b>
+                    ${formatoPorcentaje(empleado["PORCENTAJE RENTABILIDAD"])}
+                </p>
+            `)}
+        </div>
 
-        ${mostrarCampo("COMISION TOTAL", `
-            <p>
-                <b>Comisión Total:</b>
-                $${formatoMoneda(empleado["COMISION TOTAL"])}
-            </p>
-        `)}
+        <div class="fila-comision">
+            ${mostrarCampo("CARTERA VENCIDA", `
+                <p>
+                    <b>Cartera Vencida:</b>
+                    $${formatoMoneda(empleado["CARTERA VENCIDA"])}
+                </p>
+            `)}
 
-        ${mostrarCampo("PORCENTAJE TOTAL", `
-            <P>
-                <b>Porcentaje Total:</b>
-                $${formatoPorcentaje(empleado["PORCENTAJE TOTAL"])}
-            </P>
-        `)}
+            ${mostrarCampo("PORCENTAJE CARTERA", `
+                <p>
+                    <b>Porcentaje Cartera:</b>
+                    ${formatoPorcentaje(empleado["PORCENTAJE CARTERA"])}
+                </p>
+            `)}
+        </div>
+
+        <div class="fila-comision">
+            ${mostrarCampo("VENTAS MAYOR", `
+                <p>
+                    <b>Ventas Mayor:</b>
+                    $${formatoMoneda(empleado["VENTAS MAYOR"])}
+                </p>
+            `)}
+
+            ${mostrarCampo("COMISION MAYOR", `
+                <p>
+                    <b>Comisión Mayor:</b>
+                    $${formatoMoneda(empleado["COMISION MAYOR"])}
+                </p>
+            `)}
+        </div>
+
+        <div class="fila-comision">
+            ${mostrarCampo("VENTAS CALLE", `
+                <p>
+                    <b>Ventas Calle:</b>
+                    $${formatoMoneda(empleado["VENTAS CALLE"])}
+                </p>
+            `)}
+
+            ${mostrarCampo("COMISION CALLE", `
+                <p>
+                    <b>Comisión Calle:</b>
+                    $${formatoMoneda(empleado["COMISION CALLE"])}
+                </p>
+            `)}
+        </div>
+
+        <div class="fila-comision">
+            ${mostrarCampo("COMISION TOTAL", `
+                <p>
+                    <b>Comisión Total:</b>
+                    $${formatoMoneda(empleado["COMISION TOTAL"])}
+                </p>
+            `)}
+
+            ${mostrarCampo("PORCENTAJE TOTAL", `
+                <P>
+                    <b>Porcentaje Total:</b>
+                    ${formatoPorcentaje(empleado["PORCENTAJE TOTAL"])}
+                </P>
+            `)}
+        </div>
 
     `;
 
