@@ -408,7 +408,7 @@ function buscarEmpleado() {
             ${mostrarCampo("CARTERA VENCIDA", `
                 <p>
                     <b>Cartera Vencida:</b>
-                    $${formatoMoneda(empleado["CARTERA VENCIDA"])}
+                    $${formatoPorcentaje(empleado["CARTERA VENCIDA"])}
                 </p>
             `)}
 
