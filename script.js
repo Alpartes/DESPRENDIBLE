@@ -12,7 +12,8 @@ const cedulasSoloBanco = [
     "1015473856",
     "1003533086",
     "1053330769",
-    "1003483344"
+    "1003483344",
+    "1121959063"
 ];
 
 // Grupo 2: banco, efectivo y comisiones generales
